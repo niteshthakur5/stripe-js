@@ -1,5 +1,5 @@
 import {StripeConstructor} from '../types';
-import {loadScript, initStripe, LoadStripe} from './shared';
+import {loadScript, initStripe, LoadStripe, LoadCustomStripe} from './shared';
 
 let stripePromise: Promise<StripeConstructor | null> | null;
 let loadCalled = false;
@@ -33,6 +33,17 @@ export const loadStripe: LoadStripe = (...args) => {
 
   // if previous attempts are unsuccessful, will re-load script
   return getStripePromise().then((maybeStripe) =>
+    initStripe(maybeStripe, args, startTime)
+  );
+};
+
+export const loadCustomStripeInExtensions: LoadCustomStripe = (stripePromise, ...args) => {
+  loadCalled = true;
+  const startTime = Date.now();
+  console.log("stripePromise : ", stripePromise);
+
+  // if previous attempts are unsuccessful, will re-load script
+  return stripePromise.then((maybeStripe) =>
     initStripe(maybeStripe, args, startTime)
   );
 };

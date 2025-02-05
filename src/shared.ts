@@ -4,6 +4,11 @@ export type LoadStripe = (
   ...args: Parameters<StripeConstructor>
 ) => Promise<Stripe | null>;
 
+export type LoadCustomStripe = (
+  Promise: Promise<null>,
+  ...args: Parameters<StripeConstructor>
+) => Promise<Stripe | null>;
+
 export interface LoadParams {
   advancedFraudSignals: boolean;
 }
